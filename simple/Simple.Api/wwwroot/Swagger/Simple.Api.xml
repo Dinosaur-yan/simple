@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Simple.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Simple.Api.Controllers.FileController">
+            <summary>
+            文件管理
+            </summary>
+        </member>
+        <member name="M:Simple.Api.Controllers.FileController.UploadFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            上传文件
+            </summary>
+            <param name="form"></param>
+        </member>
+    </members>
+</doc>

@@ -15,5 +15,88 @@
             </summary>
             <param name="form"></param>
         </member>
+        <member name="T:Simple.Api.Controllers.TokenController">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="M:Simple.Api.Controllers.TokenController.GetToken(Simple.Application.UserDto)">
+            <summary>
+            获取Token
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Simple.Api.Controllers.TokenController.RefreshToken(System.String)">
+            <summary>
+            刷新Token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.Issuer">
+            <summary>
+            Issuer jwt签发者
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.Subject">
+            <summary>
+            Subject jwt所面向的用户
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.Audience">
+            <summary>
+            Audience 接收jwt的一方
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.NotBefore">
+            <summary>
+            Not Before 定义在什么时间之前,该jwt是不可以用的
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.Expiration">
+            <summary>
+            Expiration Time jwt的过期时间,必须大于签发时间
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.IssuedAt">
+            <summary>
+            Issued At jwt的签发时间
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.ValidFor">
+            <summary>
+            Set the timespan the token will be valid for (default is 10 min)
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.JtiGenerator">
+            <summary>
+            "jti" (JWT ID) Claim (default ID is a GUID)
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtOptions.SigningCredentials">
+            <summary>
+            The signing key to use when generating tokens.
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtToken.access_token">
+            <summary>
+            access token
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtToken.refresh_token">
+            <summary>
+            refresh token
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtToken.expires_in">
+            <summary>
+            expires_in
+            </summary>
+        </member>
+        <member name="P:Simple.Api.Extensions.JwtAuth.JwtToken.token_type">
+            <summary>
+            token type
+            </summary>
+        </member>
     </members>
 </doc>

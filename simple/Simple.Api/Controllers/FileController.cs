@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Simple.Api.Controllers
 {
@@ -13,7 +10,7 @@ namespace Simple.Api.Controllers
     /// </summary>
     [Route("api/files")]
     [ApiController]
-    public class FileController : ControllerBase
+    public class FileController : BaseController
     {
         private readonly ILogger _logger;
 
@@ -29,7 +26,8 @@ namespace Simple.Api.Controllers
         [HttpPost]
         public void UploadFile(IFormFile form)
         {
-            _logger.LogInformation(@$"{DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss")}上传文件 '{form.FileName}'");
+            if (form != null)
+                _logger.LogInformation(@$"{DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss")}上传文件 '{form.FileName}'");
         }
     }
 }

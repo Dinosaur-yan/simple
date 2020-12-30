@@ -3,11 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Simple.Api.Extensions.AppBuilder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Simple.Api.Extensions
 {
@@ -17,8 +13,11 @@ namespace Simple.Api.Extensions
             IConfiguration configuration)
         {
             IServiceBuilder serviceBuilder = new ServiceBuilder(services, configuration);
+            serviceBuilder.AddAuthentication();
+            serviceBuilder.AddAutoMapper();
             serviceBuilder.AddControllers();
             serviceBuilder.AddSwaggerGen();
+            serviceBuilder.RegisterService();
         }
 
         public static void AddConfigurationProvider(this IApplicationBuilder app, IWebHostEnvironment env)

@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Linq;
 
-namespace ServiceManagement.API.Extensions.Swagger
+namespace Simple.Api.Extensions.Swagger
 {
     public class SwaggerUploadFileFilter : IOperationFilter
     {

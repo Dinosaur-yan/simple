@@ -7,8 +7,14 @@ namespace Simple.Api.Extensions.AppBuilder
 {
     public interface IServiceBuilder
     {
+        void AddAuthentication();
+
+        void AddAutoMapper();
+
         void AddControllers();
 
         void AddSwaggerGen();
+
+        void RegisterService();
     }
 }

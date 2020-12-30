@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using ServiceManagement.API.Extensions.Swagger;
 using System;
 using System.Collections.Generic;
@@ -26,8 +28,18 @@ namespace Simple.Api.Extensions.AppBuilder
             services.AddControllers(options =>
             {
             })
-            .AddNewtonsoftJson()
+            .AddNewtonsoftJson(JsonOptions)
             .AddXmlSerializerFormatters();
+        }
+
+        private void JsonOptions(MvcNewtonsoftJsonOptions json)
+        {
+            json.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            json.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Include;
+            json.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
+            json.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+            json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
 
         public void AddSwaggerGen()

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Simple.Application;
+using Simple.Domain.Entities;
 
 namespace Simple.Api.Extensions.AutoMapper
 {
@@ -7,7 +8,15 @@ namespace Simple.Api.Extensions.AutoMapper
     {
         public CustomProfile()
         {
-            CreateMap<UserInfo, UserDto>().ReverseMap();
+            #region User
+
+            CreateMap<User, UserDto>().ReverseMap();
+
+            CreateMap<User, UserInfo>().ReverseMap();
+
+            CreateMap<UserDto, UserInfo>().ReverseMap();
+
+            #endregion User
         }
     }
 }

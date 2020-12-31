@@ -5,6 +5,7 @@ using Simple.Api.Extensions.JwtAuth;
 using Simple.Application;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Simple.Api.Controllers
 {
@@ -36,9 +37,9 @@ namespace Simple.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        public ApiResult<JwtToken> GetToken([FromBody] UserDto dto)
+        public async Task<ApiResult<JwtToken>> GetToken([FromBody] UserDto dto)
         {
-            var user = userService.GetUser(dto.Account, dto.Password);
+            var user = await userService.GetUserAsync(dto.Account, dto.Password);
             if (user == null) return new ApiResult<JwtToken>(ResultType.NotFound);
 
             var refreshToken = Guid.NewGuid().ToString();
@@ -60,14 +61,14 @@ namespace Simple.Api.Controllers
             if (!memoryCache.TryGetValue(refreshToken, out string userName))
                 return new ApiResult<JwtToken>(ResultType.BadRequest, "登录失败: refreshtoken 无效.");
 
-            if (!UserIdentity.UserName.Equals(userName))
+            if (!UserInfo.UserName.Equals(userName))
                 return new ApiResult<JwtToken>(ResultType.Forbidden, "登录失败: 用户名 无效.");
 
             string newRefreshToken = Guid.NewGuid().ToString();
             memoryCache.Remove(refreshToken);
-            memoryCache.Set(newRefreshToken, UserIdentity.UserName, TimeSpan.FromMinutes(11));
+            memoryCache.Set(newRefreshToken, UserInfo.UserName, TimeSpan.FromMinutes(11));
 
-            var token = jwtFactory.GenerateEncodedToken(newRefreshToken, UserIdentity);
+            var token = jwtFactory.GenerateEncodedToken(newRefreshToken, UserInfo);
 
             return new ApiResult<JwtToken>(ResultType.OK, token);
         }

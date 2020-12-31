@@ -4,11 +4,13 @@ using System.Text;
 
 public interface ITrack
 {
-    IsDelete IsDelete { get; set; }
+    bool IsDelete { get; set; }
 
     int CreateUser { get; set; }
 
     DateTime CreateTime { get; set; }
+
+    DateTime? UpdateTime { get; set; }
 
     DateTime? DeleteTime { get; set; }
 }

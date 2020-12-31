@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Simple.Application
 {
     public interface IUserService
     {
-        UserDto Get(int id);
+        Task<UserDto> GetAsync(int id);
 
-        List<UserDto> GetAll();
+        Task<List<UserDto>> GetAllAsync();
 
-        UserInfo GetUser(string account, string password);
+        Task<UserInfo> GetUserAsync(string account, string password);
     }
 }

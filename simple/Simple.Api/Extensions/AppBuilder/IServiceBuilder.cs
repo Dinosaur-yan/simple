@@ -13,6 +13,8 @@ namespace Simple.Api.Extensions.AppBuilder
 
         void AddControllers();
 
+        void AddDbContext();
+
         void AddSwaggerGen();
 
         void RegisterService();

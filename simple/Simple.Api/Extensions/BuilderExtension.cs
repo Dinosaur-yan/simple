@@ -15,6 +15,7 @@ namespace Simple.Api.Extensions
             IServiceBuilder serviceBuilder = new ServiceBuilder(services, configuration);
             serviceBuilder.AddAuthentication();
             serviceBuilder.AddAutoMapper();
+            serviceBuilder.AddDbContext();
             serviceBuilder.AddControllers();
             serviceBuilder.AddSwaggerGen();
             serviceBuilder.RegisterService();

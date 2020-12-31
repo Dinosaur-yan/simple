@@ -1,41 +1,36 @@
 ﻿using AutoMapper;
+using Simple.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Simple.Application
 {
     public class UserService : IUserService
     {
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IMapper mapper)
+        public UserService(IMapper mapper, IUserRepository userRepository)
         {
             _mapper = mapper;
-
-            MockUsers = new List<UserDto>
-            {
-                new UserDto { Id = 1, Account = "Admin", Password = "1111", UserName = "系统管理员" },
-                new UserDto { Id = 2, Account = "DevUser", Password = "1111", UserName = "开发人员" },
-                new UserDto { Id = 2, Account = "TestUser", Password = "1111", UserName = "测试人员" },
-            };
+            _userRepository = userRepository;
         }
 
-        private readonly List<UserDto> MockUsers = null;
-
-        public UserDto Get(int id)
+        public async Task<UserDto> GetAsync(int id)
         {
-            return MockUsers.Find(t => t.Id == id);
+            return _mapper.Map<UserDto>(await _userRepository.GetAsync(id));
         }
 
-        public List<UserDto> GetAll()
+        public async Task<List<UserDto>> GetAllAsync()
         {
-            return MockUsers;
+            return _mapper.Map<List<UserDto>>(await _userRepository.GetAllAsync());
         }
 
-        public UserInfo GetUser(string account, string password)
+        public async Task<UserInfo> GetUserAsync(string account, string password)
         {
-            var user = MockUsers.Find(t => t.Account == account && t.Password == password);
+            var user = await _userRepository.FirstOrDefaultAsync(t => t.Account == account && t.Password == password);
             return _mapper.Map<UserInfo>(user);
         }
     }

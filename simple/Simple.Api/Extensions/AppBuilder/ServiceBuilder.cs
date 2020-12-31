@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -8,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Simple.Api.Extensions.JwtAuth;
 using Simple.Api.Extensions.Swagger;
+using Simple.Domain;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,6 +88,14 @@ namespace Simple.Api.Extensions.AppBuilder
             json.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
             json.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
             json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        }
+
+        public void AddDbContext()
+        {
+            services.AddDbContextPool<AppDbContext>(options =>
+            {
+                options.UseMySQL(configuration.GetConnectionString("DefaultConnection"));
+            });
         }
 
         public void AddSwaggerGen()

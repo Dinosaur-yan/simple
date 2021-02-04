@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Simple.Api.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     public class BaseController : ControllerBase
     {

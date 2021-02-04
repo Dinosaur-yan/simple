@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,8 +75,10 @@ namespace Simple.Api.Extensions.AppBuilder
         {
             services.AddMemoryCache();
 
-            services.AddControllers(options =>
+            services.AddControllers(configure =>
             {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                configure.Filters.Add(new AuthorizeFilter(policy));
             })
             .AddNewtonsoftJson(JsonOptions)
             .AddXmlSerializerFormatters();

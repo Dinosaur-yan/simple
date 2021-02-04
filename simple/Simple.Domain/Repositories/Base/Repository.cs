@@ -11,7 +11,7 @@ namespace Simple.Domain.Repositories
     public class Repository<TEntity> : Repository<TEntity, int>, IRepository<TEntity>
          where TEntity : class, IEntity
     {
-        public Repository(DbContext dbDbContext) : base(dbDbContext)
+        public Repository(DbContext context) : base(context)
         {
         }
     }
@@ -20,7 +20,7 @@ namespace Simple.Domain.Repositories
         where TEntity : class, IEntity<TPrimaryKey>
     {
         private readonly DbContext _db;
-        public virtual DbSet<TEntity> table => _db.Set<TEntity>();
+        public virtual DbSet<TEntity> _table => _db.Set<TEntity>();
 
         public Repository(DbContext context)
         {
@@ -31,12 +31,12 @@ namespace Simple.Domain.Repositories
 
         public override IQueryable<TEntity> Query()
         {
-            return table.AsQueryable();
+            return _table.AsQueryable();
         }
 
         public override IQueryable<TEntity> QueryNoTracking()
         {
-            return table.AsQueryable().AsNoTracking();
+            return _table.AsQueryable().AsNoTracking();
         }
 
         #endregion Query
@@ -45,24 +45,24 @@ namespace Simple.Domain.Repositories
 
         public override TEntity Insert(TEntity entity)
         {
-            var newEntity = table.Add(entity).Entity;
+            var newEntity = _table.Add(entity).Entity;
             return newEntity;
         }
 
         public override async Task<TEntity> InsertAsync(TEntity entity)
         {
-            var entityEntry = await table.AddAsync(entity);
+            var entityEntry = await _table.AddAsync(entity);
             return entityEntry.Entity;
         }
 
         public override void Insert(List<TEntity> entities)
         {
-            table.AddRange(entities);
+            _table.AddRange(entities);
         }
 
         public override Task InsertAsync(List<TEntity> entities)
         {
-            table.AddRangeAsync(entities);
+            _table.AddRangeAsync(entities);
             return Task.CompletedTask;
         }
 
@@ -116,7 +116,7 @@ namespace Simple.Domain.Repositories
         public override void HardDelete(TEntity entity)
         {
             AttachIfNot(entity);
-            table.Remove(entity);
+            _table.Remove(entity);
         }
 
         public override void HardDelete(TPrimaryKey id)
@@ -138,14 +138,14 @@ namespace Simple.Domain.Repositories
 
         public override void HardDelete(Expression<Func<TEntity, bool>> predicate)
         {
-            var entities = table.Where(predicate).ToList();
+            var entities = _table.Where(predicate).ToList();
             if (entities.Any())
             {
                 entities.ForEach(entity =>
                 {
                     AttachIfNot(entity);
                 });
-                table.RemoveRange(entities);
+                _table.RemoveRange(entities);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Simple.Domain.Repositories
                 return;
             }
 
-            table.Attach(entity);
+            _table.Attach(entity);
         }
 
         private TEntity GetFromChangeTrackerOrNull(TPrimaryKey id)
